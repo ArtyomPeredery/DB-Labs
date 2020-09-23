@@ -19,10 +19,7 @@ where
 -- Если поле EndDate = NULL это значит, что сотрудник работает в отделе по настоящее время.
 select 
 	BusinessEntityID, DepartmentID, StartDate, EndDate,
-    	DATEDIFF(YEAR, StartDate, case when EndDate is  NULL 
-			then GETDATE() 
-		else EndDate
-	end) as YearsWorked 
+    	DATEDIFF(YEAR, StartDate, COALESCE(EndDate,GETDATE()))  as YearsWorked 
 from 
 	HumanResources.EmployeeDepartmentHistory 
 where 
